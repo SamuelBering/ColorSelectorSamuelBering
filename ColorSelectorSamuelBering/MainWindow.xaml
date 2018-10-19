@@ -6,7 +6,61 @@
         xmlns:local="clr-namespace:ColorSelectorSamuelBering"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid HorizontalAlignment="Left" Height="343" Margin="107,40,0,0" VerticalAlignment="Top" Width="343">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Top">
+            <Menu Width="Auto" Height="20">
+                <MenuItem Header="Database">
+                    <MenuItem x:Name="Save" Header="Save" HorizontalAlignment="Left" Width="140" />
+                    <MenuItem x:Name="Load" Header="Load" HorizontalAlignment="Left" Width="140" />
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+
+        <Grid Grid.Column="0" Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition  />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">R</Label>
+            <Slider Margin="10" Grid.Column="1" Grid.Row="0" Maximum="255" />
+            <TextBox HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="0" >Hej</TextBox>
+            <Rectangle Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" Fill="Red" 
+                   Height="100"
+                   Stroke="Black" StrokeThickness="1"
+                   VerticalAlignment="Center" HorizontalAlignment="Center" Width="120"
+                   RadiusY="13.5" RadiusX="13.5"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1">G</Label>
+            <Slider Margin="10" Grid.Column="1" Grid.Row="1" Maximum="255" />
+            <TextBox HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="1" >Hej</TextBox>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2">R</Label>
+            <Slider Margin="10" Grid.Column="1" Grid.Row="2" Maximum="255" />
+            <TextBox HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="2" >Hej</TextBox>
+
+        </Grid>
+        <!--<Grid HorizontalAlignment="Left" Height="102" Margin="32,65,0,0" VerticalAlignment="Top" Width="262"/>-->
     </Grid>
+    <!--<StackPanel>
+        <TextBox FontSize="30" Text="{Binding currentColor.R,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox FontSize="30" Text="TESTS"></TextBox>
+        <TextBlock FontSize="30" Text="{Binding currentColor.R}"></TextBlock>
+    </StackPanel>-->
+
 </Window>
