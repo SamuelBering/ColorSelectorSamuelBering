@@ -18,5 +18,13 @@
             <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
 
+        <!-- Button style -->
+        <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="70" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Margin" Value="0,0,10,0" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+
     </Application.Resources>
 </Application>
