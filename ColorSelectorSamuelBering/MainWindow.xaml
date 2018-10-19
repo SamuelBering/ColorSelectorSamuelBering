@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorSelectorSamuelBering"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Sams Color Selector" Height="450" Width="800">
     <Window.Resources>
         <local:RgbConverter x:Key="RgbConverter" />
     </Window.Resources>
@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Top">
@@ -70,6 +71,13 @@
             <TextBox Text="{Binding currentColor.B,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="2" ></TextBox>
             <Button Grid.Column="3" Grid.Row="3" Style="{StaticResource buttonStyle}">Add</Button>
         </Grid>
+
+        <ListBox Margin="0,0,5,5" Grid.Row="2" Grid.Column="0" Name="colorListBox">
+            <ListBoxItem>Hej</ListBoxItem>
+            <ListBoxItem>Hej</ListBoxItem>
+        </ListBox>
+        <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource buttonStyle}">Remove</Button>
+
         <!--<Grid HorizontalAlignment="Left" Height="102" Margin="32,65,0,0" VerticalAlignment="Top" Width="262"/>-->
     </Grid>
     <!--<StackPanel>
