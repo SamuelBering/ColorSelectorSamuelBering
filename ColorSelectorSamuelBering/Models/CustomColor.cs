@@ -13,6 +13,18 @@ namespace ColorSelectorSamuelBering.Models
         private byte g;
         private byte b;
 
+        public CustomColor()
+        {
+
+        }
+
+        public CustomColor(CustomColor c)
+        {
+            R = c.R;
+            G = c.G;
+            B = c.B;
+        }
+
         public byte R
         {
             get { return this.r; }

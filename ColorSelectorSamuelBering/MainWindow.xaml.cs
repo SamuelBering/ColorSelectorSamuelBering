@@ -1,4 +1,5 @@
-﻿using ColorSelectorSamuelBering.Models;
+﻿using ColorSelectorSamuelBering.Commands;
+using ColorSelectorSamuelBering.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,13 +33,28 @@ namespace ColorSelectorSamuelBering
     {
         public CustomColor currentColor { get; set; }
         public string test { get; set; } = "Hej";
-        ObservableCollection<Color> colorList;
+        public ObservableCollection<CustomColor> colorList { get; set; }
+
+        private ICommand addColorCommand;
+        public ICommand AddColorCommand
+        {
+            get
+            {
+                if (addColorCommand == null)
+                    addColorCommand = new AddColor(colorList);
+                return addColorCommand;
+            }
+            set
+            {
+                addColorCommand = value;
+            }
+        }
 
         public MainWindow()
         {
             currentColor = new CustomColor();
             currentColor.R = 255;
-            colorList = new ObservableCollection<Color>();
+            colorList = new ObservableCollection<CustomColor>();
             InitializeComponent();
             this.DataContext = this;
         }
