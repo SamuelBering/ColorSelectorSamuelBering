@@ -10,10 +10,13 @@ namespace ColorSelectorSamuelBering.Commands
     public class DelegateCommand : ICommand
     {
         private readonly Action<object> _action;
+        private Predicate<object> _canExecute;
 
-        public DelegateCommand(Action<object> action)
+        public DelegateCommand(Action<object> execute) : this(execute, null) { }
+        public DelegateCommand(Action<object> action, Predicate<object> canExecute)
         {
             _action = action;
+            _canExecute = canExecute;
         }
 
         public void Execute(object parameter)
@@ -23,7 +26,7 @@ namespace ColorSelectorSamuelBering.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return _canExecute == null ? true : _canExecute(parameter);
         }
 
         public event EventHandler CanExecuteChanged

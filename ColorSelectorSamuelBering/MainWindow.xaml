@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:ColorSelectorSamuelBering"
         xmlns:localViewModels="clr-namespace:ColorSelectorSamuelBering.ViewModels"
         mc:Ignorable="d"
@@ -40,8 +41,8 @@
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-<!--<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding CurrentColor.R}" FontSize="30" />-->
-        
+        <!--<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding CurrentColor.R}" FontSize="30" />-->
+
         <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Top">
             <Menu Width="Auto" Height="20">
                 <MenuItem Header="Database">
@@ -94,16 +95,17 @@
             <Button Command="{Binding AddColorCommand}" CommandParameter="{Binding CurrentColor}" Grid.Column="3" Grid.Row="3" Style="{StaticResource buttonStyle}">Add</Button>
         </Grid>
 
-        <!--<ListBox ItemsSource="{Binding ColorList}" SelectedValuePath="R" DisplayMemberPath="R" Margin="0,0,5,5" Grid.Row="2" Grid.Column="0" Name="colorListBox">
-           
-        </ListBox>-->
-        <ListBox  ItemTemplate="{StaticResource colorItemTemplate}" ItemsSource="{Binding ColorList}" Margin="0,0,5,5" Grid.Row="2" Grid.Column="0" Name="colorListBox">
-
+      
+        <ListBox ItemTemplate="{StaticResource colorItemTemplate}" ItemsSource="{Binding ColorList}" Margin="0,0,5,5" Grid.Row="2" Grid.Column="0" Name="colorListBox">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedColorChangedCommand}"  CommandParameter="{Binding ElementName=colorListBox, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </ListBox>
-        <!--SelectedValuePath="R" DisplayMemberPath="R"-->
-        <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource buttonStyle}">Remove</Button>
+        <Button Grid.Row="3" Grid.Column="0"  Style="{StaticResource buttonStyle}">Remove</Button>
 
     </Grid>
-   
+
 
 </Window>
