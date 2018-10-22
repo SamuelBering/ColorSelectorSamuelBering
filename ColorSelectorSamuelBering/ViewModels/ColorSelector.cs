@@ -1,5 +1,8 @@
 ﻿using ColorSelectorSamuelBering.Commands;
+using ColorSelectorSamuelBering.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace ColorSelectorSamuelBering.ViewModels
@@ -7,6 +10,8 @@ namespace ColorSelectorSamuelBering.ViewModels
     public class ColorSelector : ObservableObject
     {
         private CustomColor _selectedColor;
+
+        private IColorSelectorService _colorSelectorService;
 
         public CustomColor CurrentColor { get; set; }
 
@@ -27,13 +32,32 @@ namespace ColorSelectorSamuelBering.ViewModels
         }
         public ObservableCollection<CustomColor> ColorList { get; set; }
 
-        public ColorSelector()
+        public ColorSelector(IColorSelectorService colorSelectorService)
+        {
+            _colorSelectorService = colorSelectorService;
+        }
+
+        public ColorSelector() : this(new ColorSelectorService())
         {
             CurrentColor = new CustomColor();
-            CurrentColor.R = 255;
             ColorList = new ObservableCollection<CustomColor>();
         }
 
+        public ICommand SaveColorsCommand
+        {
+            get
+            {
+                return new DelegateCommand(SaveColors, parameter => ColorList.Count > 0 ? true : false);
+            }
+        }
+
+        public ICommand LoadColorsCommand
+        {
+            get
+            {
+                return new DelegateCommand(LoadColors);
+            }
+        }
 
         public ICommand AddColorCommand
         {
@@ -77,6 +101,26 @@ namespace ColorSelectorSamuelBering.ViewModels
             CurrentColor.G = selectedColor.G;
             CurrentColor.B = selectedColor.B;
             SelectedColor = selectedColor;
+        }
+
+        private void SaveColors(object parameter)
+        {
+            var colors = parameter as ObservableCollection<CustomColor>;
+            _colorSelectorService.SaveColors(colors.ToList());
+        }
+
+        private void LoadColors(object parameter)
+        {
+            var colorList = parameter as ObservableCollection<CustomColor>;
+            var colors = _colorSelectorService.LoadColors();
+
+            colorList.Clear();
+            foreach(var color in colors)
+            {
+                colorList.Add(color);
+            }
+
+            SelectedColor = null;
         }
 
         private void AddColor(object parameter)

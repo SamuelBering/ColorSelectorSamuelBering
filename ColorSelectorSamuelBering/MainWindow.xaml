@@ -46,8 +46,8 @@
         <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Top">
             <Menu Width="Auto" Height="20">
                 <MenuItem Header="Database">
-                    <MenuItem x:Name="Save" Header="Save" HorizontalAlignment="Left" Width="140" />
-                    <MenuItem x:Name="Load" Header="Load" HorizontalAlignment="Left" Width="140" />
+                    <MenuItem Command="{Binding SaveColorsCommand}" CommandParameter="{Binding ColorList}" x:Name="Save" Header="Save" HorizontalAlignment="Left" Width="140" />
+                    <MenuItem Command="{Binding LoadColorsCommand}" CommandParameter="{Binding ColorList}" x:Name="Load" Header="Load" HorizontalAlignment="Left" Width="140" />
                 </MenuItem>
             </Menu>
         </StackPanel>
@@ -67,7 +67,7 @@
             </Grid.RowDefinitions>
 
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">R</Label>
-            <Slider Value="{Binding  CurrentColor.R,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="0" Maximum="255" />
+            <Slider Value="{Binding  CurrentColor.R,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="255" />
             <TextBox Text="{Binding CurrentColor.R,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="0" ></TextBox>
             <Rectangle Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" 
                    Height="100"
@@ -87,15 +87,15 @@
                 </Rectangle.Fill>
             </Rectangle>
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1">G</Label>
-            <Slider Value="{Binding CurrentColor.G,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="1" Maximum="255" />
+            <Slider Value="{Binding CurrentColor.G,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="1" Minimum="0" Maximum="255" />
             <TextBox Text="{Binding CurrentColor.G,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="1" ></TextBox>
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2">B</Label>
-            <Slider Value="{Binding CurrentColor.B,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="2" Maximum="255" />
+            <Slider Value="{Binding CurrentColor.B,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="2" Minimum="0" Maximum="255" />
             <TextBox Text="{Binding CurrentColor.B,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="2" ></TextBox>
             <Button Command="{Binding AddColorCommand}" CommandParameter="{Binding CurrentColor}" Grid.Column="3" Grid.Row="3" Style="{StaticResource buttonStyle}">Add</Button>
         </Grid>
 
-      
+
         <ListBox ItemTemplate="{StaticResource colorItemTemplate}" ItemsSource="{Binding ColorList}" Margin="0,0,5,5" Grid.Row="2" Grid.Column="0" Name="colorListBox">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">

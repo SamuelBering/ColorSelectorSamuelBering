@@ -44,7 +44,8 @@ namespace ColorSelectorSamuelBering.ViewModels
             get { return this.r; }
             set
             {
-                if (this.r != value)
+                
+                if (this.r != value )
                 {
                     this.r = value;
                     this.NotifyPropertyChanged("R");
