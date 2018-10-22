@@ -103,7 +103,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>
-        <Button Grid.Row="3" Grid.Column="0"  Style="{StaticResource buttonStyle}">Remove</Button>
+        <Button Command="{Binding RemoveColorCommand}" CommandParameter="{Binding SelectedColor}" Grid.Row="3" Grid.Column="0"  Style="{StaticResource buttonStyle}">Remove</Button>
 
     </Grid>
 

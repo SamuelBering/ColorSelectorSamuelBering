@@ -12,7 +12,8 @@ namespace ColorSelectorSamuelBering.ViewModels
 
         public CustomColor SelectedColor
         {
-            get{
+            get
+            {
                 return _selectedColor;
             }
             set
@@ -20,7 +21,7 @@ namespace ColorSelectorSamuelBering.ViewModels
                 if (_selectedColor != value)
                 {
                     _selectedColor = value;
-                    NotifyPropertyChanged("SelectedColor"); 
+                    NotifyPropertyChanged("SelectedColor");
                 }
             }
         }
@@ -46,13 +47,13 @@ namespace ColorSelectorSamuelBering.ViewModels
         {
             get
             {
-                return new DelegateCommand(RemoveColor);
+                return new DelegateCommand(RemoveColor, parameter => SelectedColor != null ? true : false);
             }
         }
 
         private void RemoveColor(object parameter)
         {
-
+            ColorList.Remove(parameter as CustomColor);
         }
 
         public ICommand SelectedColorChangedCommand
@@ -66,10 +67,16 @@ namespace ColorSelectorSamuelBering.ViewModels
         private void SelectedColorChanged(object parameter)
         {
             var selectedColor = parameter as CustomColor;
-            CurrentColor.R=selectedColor.R;
+            if (selectedColor == null)
+            {
+                SelectedColor = null;
+                return;
+            }
+
+            CurrentColor.R = selectedColor.R;
             CurrentColor.G = selectedColor.G;
             CurrentColor.B = selectedColor.B;
-            _selectedColor = selectedColor;
+            SelectedColor = selectedColor;
         }
 
         private void AddColor(object parameter)
