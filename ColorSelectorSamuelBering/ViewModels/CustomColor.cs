@@ -1,13 +1,14 @@
-﻿using System;
+﻿using ColorSelectorSamuelBering.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ColorSelectorSamuelBering.Models
+namespace ColorSelectorSamuelBering.ViewModels
 {
-    public class CustomColor : INotifyPropertyChanged
+    public class CustomColor : ObservableObject
     {
         private byte r;
         private byte g;
@@ -18,11 +19,24 @@ namespace ColorSelectorSamuelBering.Models
 
         }
 
+        public override string ToString()
+        {
+            return $"({R},{G},{B})";
+        }
+
         public CustomColor(CustomColor c)
         {
             R = c.R;
             G = c.G;
             B = c.B;
+        }
+
+        public string AsString
+        {
+            get
+            {
+                return this.ToString();
+            }
         }
 
         public byte R
@@ -66,13 +80,13 @@ namespace ColorSelectorSamuelBering.Models
 
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(string propName)
-        {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        }
+        //public void NotifyPropertyChanged(string propName)
+        //{
+        //    if (this.PropertyChanged != null)
+        //        this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        //}
     }
 
 }

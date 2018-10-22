@@ -4,12 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorSelectorSamuelBering"
+        xmlns:localViewModels="clr-namespace:ColorSelectorSamuelBering.ViewModels"
         mc:Ignorable="d"
         Title="Sams Color Selector" Height="450" Width="800">
     <Window.Resources>
         <local:RgbConverter x:Key="RgbConverter" />
     </Window.Resources>
+    <Window.DataContext>
+        <localViewModels:ColorSelector/>
+    </Window.DataContext>
     <Grid HorizontalAlignment="Left" Height="343" Margin="107,40,0,0" VerticalAlignment="Top" Width="343">
+        <Grid.Resources>
+            <DataTemplate x:Key="colorItemTemplate">
+                <Label Content="{Binding Path=AsString}">
+                    <Label.Background>
+                        <SolidColorBrush>
+                            <SolidColorBrush.Color>
+                                <MultiBinding Converter="{StaticResource RgbConverter}">
+                                    <Binding Path="R" />
+                                    <Binding Path="G" />
+                                    <Binding Path="B" />
+                                </MultiBinding>
+                            </SolidColorBrush.Color>
+                        </SolidColorBrush>
+                    </Label.Background>
+                </Label>
+            </DataTemplate>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
@@ -19,7 +40,8 @@
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
+<!--<TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding CurrentColor.R}" FontSize="30" />-->
+        
         <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Top">
             <Menu Width="Auto" Height="20">
                 <MenuItem Header="Database">
@@ -44,8 +66,8 @@
             </Grid.RowDefinitions>
 
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">R</Label>
-            <Slider Value="{Binding currentColor.R,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="0" Maximum="255" />
-            <TextBox Text="{Binding currentColor.R,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="0" ></TextBox>
+            <Slider Value="{Binding  CurrentColor.R,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="0" Maximum="255" />
+            <TextBox Text="{Binding CurrentColor.R,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="0" ></TextBox>
             <Rectangle Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" 
                    Height="100"
                    Stroke="Black" StrokeThickness="1"
@@ -55,35 +77,33 @@
                     <SolidColorBrush>
                         <SolidColorBrush.Color>
                             <MultiBinding Converter="{StaticResource RgbConverter}">
-                                <Binding Path="currentColor.R" />
-                                <Binding Path="currentColor.G" />
-                                <Binding Path="currentColor.B" />
+                                <Binding Path="CurrentColor.R" />
+                                <Binding Path="CurrentColor.G" />
+                                <Binding Path="CurrentColor.B" />
                             </MultiBinding>
                         </SolidColorBrush.Color>
                     </SolidColorBrush>
                 </Rectangle.Fill>
             </Rectangle>
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1">G</Label>
-            <Slider Value="{Binding currentColor.G,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="1" Maximum="255" />
-            <TextBox Text="{Binding currentColor.G,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="1" ></TextBox>
+            <Slider Value="{Binding CurrentColor.G,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="1" Maximum="255" />
+            <TextBox Text="{Binding CurrentColor.G,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="1" ></TextBox>
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2">B</Label>
-            <Slider Value="{Binding currentColor.B,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="2" Maximum="255" />
-            <TextBox Text="{Binding currentColor.B,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="2" ></TextBox>
-            <Button Command="{Binding AddColorCommand}" CommandParameter="{Binding currentColor}" Grid.Column="3" Grid.Row="3" Style="{StaticResource buttonStyle}">Add</Button>
+            <Slider Value="{Binding CurrentColor.B,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="2" Maximum="255" />
+            <TextBox Text="{Binding CurrentColor.B,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="2" ></TextBox>
+            <Button Command="{Binding AddColorCommand}" CommandParameter="{Binding CurrentColor}" Grid.Column="3" Grid.Row="3" Style="{StaticResource buttonStyle}">Add</Button>
         </Grid>
 
-        <ListBox ItemsSource="{Binding colorList}" SelectedValuePath="R" DisplayMemberPath="R" Margin="0,0,5,5" Grid.Row="2" Grid.Column="0" Name="colorListBox">
-            <!--<ListBoxItem>Hej</ListBoxItem>
-            <ListBoxItem>Hej</ListBoxItem>-->
+        <!--<ListBox ItemsSource="{Binding ColorList}" SelectedValuePath="R" DisplayMemberPath="R" Margin="0,0,5,5" Grid.Row="2" Grid.Column="0" Name="colorListBox">
+           
+        </ListBox>-->
+        <ListBox  ItemTemplate="{StaticResource colorItemTemplate}" ItemsSource="{Binding ColorList}" Margin="0,0,5,5" Grid.Row="2" Grid.Column="0" Name="colorListBox">
+
         </ListBox>
+        <!--SelectedValuePath="R" DisplayMemberPath="R"-->
         <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource buttonStyle}">Remove</Button>
 
-        <!--<Grid HorizontalAlignment="Left" Height="102" Margin="32,65,0,0" VerticalAlignment="Top" Width="262"/>-->
     </Grid>
-    <!--<StackPanel>
-        <TextBox FontSize="30" Text="{Binding currentColor.R,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <TextBox FontSize="30" Text="TESTS"></TextBox>
-        <TextBlock FontSize="30" Text="{Binding currentColor.R}"></TextBlock>
-    </StackPanel>-->
+   
 
 </Window>
