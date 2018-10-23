@@ -7,14 +7,29 @@
         xmlns:local="clr-namespace:ColorSelectorSamuelBering"
         xmlns:localViewModels="clr-namespace:ColorSelectorSamuelBering.ViewModels"
         mc:Ignorable="d"
-        Title="Sams Color Selector" Height="450" Width="800">
+        Title="Sams Color Selector" Height="456" Width="531.2">
     <Window.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Left" Margin="0,-5,5,0" Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+              Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                              Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <local:RgbConverter x:Key="RgbConverter" />
     </Window.Resources>
     <Window.DataContext>
         <localViewModels:ColorSelector/>
     </Window.DataContext>
-    <Grid HorizontalAlignment="Left" Height="343" Margin="107,40,0,0" VerticalAlignment="Top" Width="343">
+    <Grid HorizontalAlignment="Left" Height="343" Margin="42,40,0,0" VerticalAlignment="Top" Width="436">
         <Grid.Resources>
             <DataTemplate x:Key="colorItemTemplate">
                 <Label Content="{Binding Path=AsString}">
@@ -68,7 +83,21 @@
 
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0">R</Label>
             <Slider Value="{Binding  CurrentColor.R,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="0" Minimum="0" Maximum="255" />
-            <TextBox Text="{Binding CurrentColor.R,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="0" ></TextBox>
+
+            <TextBox  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                      Style="{StaticResource TextBoxInError}"     
+                      HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10"
+                      Grid.Column="2" Grid.Row="0" >
+                <TextBox.Text>
+                    <Binding Path="CurrentColor.R"
+                     UpdateSourceTrigger="PropertyChanged" >
+                        <Binding.ValidationRules>
+                            <local:ColorRangeRule Min="0" Max="255"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+
+            </TextBox>
             <Rectangle Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" 
                    Height="100"
                    Stroke="Black" StrokeThickness="1"
@@ -88,10 +117,38 @@
             </Rectangle>
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1">G</Label>
             <Slider Value="{Binding CurrentColor.G,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="1" Minimum="0" Maximum="255" />
-            <TextBox Text="{Binding CurrentColor.G,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="1" ></TextBox>
+
+            <TextBox  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                      Style="{StaticResource TextBoxInError}"                    
+                      HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10"
+                     Grid.Column="2" Grid.Row="1" >
+                <TextBox.Text>
+                    <Binding Path="CurrentColor.G"
+                     UpdateSourceTrigger="PropertyChanged" >
+                        <Binding.ValidationRules>
+                            <local:ColorRangeRule Min="0" Max="255"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2">B</Label>
             <Slider Value="{Binding CurrentColor.B,UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="1" Grid.Row="2" Minimum="0" Maximum="255" />
-            <TextBox Text="{Binding CurrentColor.B,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10" Grid.Column="2" Grid.Row="2" ></TextBox>
+
+            <TextBox  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
+                      Style="{StaticResource TextBoxInError}"                    
+                      HorizontalAlignment="Right" TextAlignment="Right" Margin="10,10,5,10"
+                      Grid.Column="2" Grid.Row="2" >
+                <TextBox.Text>
+                    <Binding Path="CurrentColor.B"
+                     UpdateSourceTrigger="PropertyChanged" >
+                        <Binding.ValidationRules>
+                            <local:ColorRangeRule Min="0" Max="255"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
             <Button Command="{Binding AddColorCommand}" CommandParameter="{Binding CurrentColor}" Grid.Column="3" Grid.Row="3" Style="{StaticResource buttonStyle}">Add</Button>
         </Grid>
 
